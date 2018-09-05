@@ -5,7 +5,7 @@
         props: ['message'],
         template: `
         <div class="vcu-online-message">
-        <span v-if="message.from === 'bot' " class="from-title from-bot"><img src="https://branding.vcu.edu/bar/academic/images/vcu-seal--gold.svg" width="75px"></span>
+        <span v-if="message.from === 'bot' " class="from-title from-bot"> Online@VCU </span>
         <span v-if="message.from === 'you' " class="from-title from-human"> You </span>
         <span v-if="message.initialMessage === true" v-html="message.content"> </span>
         <span v-if="!message.initialMessage" v-html="message.content"></span>

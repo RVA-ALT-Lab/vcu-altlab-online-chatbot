@@ -72,7 +72,7 @@ function vcu_altlab_add_chatbot (){
         </div>
         <div class="vcu-online-chat-window">
                 <div class="vcu-online-message">
-                        <span class="from-title from-bot"><img src="https://branding.vcu.edu/bar/academic/images/vcu-seal--gold.svg" width="75px"></span>
+                        <span class="from-title from-bot"> Online@VCU </span>
                         <span>
                                 <p>Howdy! I\'m the Online@VCU Virtual Assistant.</p>
                                 <p>In a few brief words, let we know how I can help you. If I can\'t answer, I\'ll put you in touch with someone who can.</p>
