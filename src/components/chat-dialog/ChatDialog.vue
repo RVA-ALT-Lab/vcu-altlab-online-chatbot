@@ -73,7 +73,7 @@ export default Vue.extend({
               botSettings: {
                 name: 'OnlineVCU',
                 alias: '$LATEST',
-                buttonText: 'Open Chat Here',
+                buttonText: 'Open Chat',
                 autoQuestions: [],
                 welcomeMessage: '',
                 styles: {},
