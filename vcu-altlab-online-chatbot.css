@@ -101,6 +101,7 @@
 }
 
 .vcu-online-chat-input .vcu-online-input-container #send-chat {
+  font-weight: bolder;
   color: #fff;
   background-color: black;
   border: 1px solid #FFB300;
