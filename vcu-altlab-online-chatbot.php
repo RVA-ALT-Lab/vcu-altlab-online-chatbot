@@ -75,7 +75,7 @@ function vcu_altlab_add_chatbot (){
                         <span class="from-title from-bot"> Online@VCU </span>
                         <span>
                                 <p>Howdy! I\'m the Online@VCU Virtual Assistant.</p>
-                                <p>In a few brief words, let we know how I can help you. If I can\'t answer, I\'ll put you in touch with someone who can.</p>
+                                <p>In a few brief words, let me know how I can help you. If I can\'t answer, I\'ll put you in touch with someone who can.</p>
                                 <p>You can also start with one of these popular topics: </p>
                                 <a href="#" v-on:click="autoSubmitQuestion(\'blackboard\')">Blackboard Courses</a>
                                 <br>
