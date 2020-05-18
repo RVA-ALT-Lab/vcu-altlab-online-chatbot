@@ -56,20 +56,23 @@ exports.handler = (event, context, callback) => {
 
 				LexRuntime.postText(params, function(err, data) {
 
-				  if (err) {
-						console.log(err, err.stack); // an error occurred
-			      		callback(err, 'Sorry, we ran into a problem at our end.');
-					} else {
-
-					var botResponse	= {
+            if (err) {
+              console.log(err, err.stack); // an error occurred
+                  callback(err, 'Sorry, we ran into a problem at our end.');
+            } else {
+					  var botResponse	= {
 							TableName: 'ChatBotConversations',
-								Item: {
-                  "conversationId": conversationId,
-                  "messageDateTime": Date.now(),
-                  "messageText": data.message,
-                  "userType": 'VCU'
-								}
-							}
+              Item: {
+                "conversationId": conversationId,
+                "messageDateTime": Date.now(),
+                "messageText": data.message,
+                "userType": 'VCU'
+              }
+            }
+
+            if (data.message === 'Gosh! I didn\'t quite catch that. Please restate your question.') {
+              botResponse.Item.messageStatus = 'Missed'
+            }
 
 						docClient.put(botResponse, function(err, data){
 							if (err){
