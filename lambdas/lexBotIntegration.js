@@ -7,8 +7,8 @@ exports.handler = (event, context, callback) => {
 		//	************************
 		//	validate and filter bad/empty messages
 		//	************************
-		if(!message.hasOwnProperty('body')){
-			var error = new Error("Cannot process message without a Body.");
+		if(!message.hasOwnProperty('messageText')){
+			var error = new Error("Cannot process message without messageText.");
 			callback(error);
 		}
 
@@ -17,26 +17,31 @@ exports.handler = (event, context, callback) => {
 				//	Message is valid so now we prepare to pass it along to the Lex API.
 				//	************************
 				AWS.config.region = 'us-east-1';
-				var lexruntime = new AWS.LexRuntime();
+				const LexRuntime = new AWS.LexRuntime();
 
-				var userID = message.userID
-				var timestamp = message.timestamp
+				const conversationId = message.conversationId
+        const messageDateTime = message.messageDateTime
+        const messageText = message.messageText || ''
+				const userType = message.userType || 'unknown'
+				const referralURL = message.referralURL || 'unknown'
 				var params = {
 				  botAlias: 'Prod',
 				  botName: 'VCUOnline',
-				  inputText: message.body,
-				  userId: userID.toString(),
+				  inputText: messageText,
+				  userId: conversationId.toString(),
 				  sessionAttributes: {
+				  	conversationId: conversationId.toString()
 				  }
 				};
 
 				var dataToSave = {
-					TableName: 'ChatbotQuestions',
+					TableName: 'ChatBotConversations',
 					Item: {
-						"timestamp": timestamp,
-						"question": message.body,
-            "userID": userID,
-            "userType": "faculty/staff"
+            "conversationId": conversationId,
+            "messageDateTime": messageDateTime,
+            "messageText": messageText,
+						"userType": userType,
+						"referralURL": referralURL
 					}
 				}
 
@@ -49,7 +54,7 @@ exports.handler = (event, context, callback) => {
 					}
 				})
 
-				lexruntime.postText(params, function(err, data) {
+				LexRuntime.postText(params, function(err, data) {
 
 				  if (err) {
 						console.log(err, err.stack); // an error occurred
@@ -57,12 +62,12 @@ exports.handler = (event, context, callback) => {
 					} else {
 
 					var botResponse	= {
-							TableName: 'ChatbotQuestions',
+							TableName: 'ChatBotConversations',
 								Item: {
-									timestamp: Date.now(),
-									question: data.message,
-									userID: userID,
-									bot: "VCU"
+                  "conversationId": conversationId,
+                  "messageDateTime": Date.now(),
+                  "messageText": data.message,
+                  "userType": 'VCU'
 								}
 							}
 

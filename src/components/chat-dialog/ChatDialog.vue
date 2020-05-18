@@ -31,10 +31,10 @@
                                 <div v-if="!userType">
                                 <p>Howdy! I'm the Online@VCU Virtual Assistant.</p>
                                   <p>To get started, which of the following best describes your role:</p>
-                                  <button class="chat-option-pill" v-on:click="assignuserType('current student')">Current Student</button>
-                                  <button class="chat-option-pill" v-on:click="assignuserType('prospective student')">Prospective Student</button>
-                                  <button class="chat-option-pill" v-on:click="assignuserType('faculty/staff')">Faculty/Staff</button>
-                                  <button class="chat-option-pill" v-on:click="assignuserType('other')">Other</button>
+                                  <button class="chat-option-pill" v-on:click="assignUserType('current student')">Current Student</button>
+                                  <button class="chat-option-pill" v-on:click="assignUserType('prospective student')">Prospective Student</button>
+                                  <button class="chat-option-pill" v-on:click="assignUserType('faculty/staff')">Faculty/Staff</button>
+                                  <button class="chat-option-pill" v-on:click="assignUserType('other')">Other</button>
                                 </div>
                                 <div v-if="userType">
                                   <p>In a few words, describe your problem. If I can't answer, I'll put you in touch with someone who can.</p>
@@ -83,9 +83,9 @@ export default Vue.extend({
               chatText: '',
               messages: [],
               isVisible: false,
-              timestamp: null,
+              messageDateTime: null,
               userType: null,
-              userID: null,
+              conversationId: null,
               url: 'https://fqtjet7xb6.execute-api.us-east-1.amazonaws.com/default/lexBotIntegration',
               autoQuestions: {
                   'canvas': 'I am having trouble with canvas',
@@ -99,9 +99,6 @@ export default Vue.extend({
           toggleWpLexChatbot: function () {
               this.isVisible = !this.isVisible
           },
-          updateBotState: function (state) {
-              this.botState = state
-          },
           scrollChatWindow: function () {
               setTimeout(function ( ){
                   let chatWindow = document.querySelector('.wp-lex-chatbot-chat-window')
@@ -111,7 +108,7 @@ export default Vue.extend({
           clearChatInput: function () {
               this.chatText = ''
           },
-          assignuserType: function (userType) {
+          assignUserType: function (userType) {
             this.userType = userType
             this.scrollChatWindow()
           },
@@ -120,10 +117,10 @@ export default Vue.extend({
               this.sendTextChatMessage()
           },
           sendTextChatMessage: function ( ) {
-              if (this.userID == null) {
-                  this.userID = Date.now()
+              if (this.conversationId === null) {
+                  this.conversationId = Date.now()
               }
-              this.timestamp = Date.now()
+              this.messageDateTime = Date.now()
               let newChat = this.chatText
               console.log(newChat)
               this.postChatMessage(newChat)
@@ -132,9 +129,9 @@ export default Vue.extend({
               this.displayResponse(newChat,'you')
                 let body = {
                     "body-json": {
-                        "timestamp": this.timestamp,
-                        "body": newChat,
-                        "userID": this.userID,
+                        "messageDateTime": this.messageDateTime,
+                        "messageText": newChat,
+                        "conversationId": this.conversationId,
                         "userType": this.userType,
                         "referralURL": document.location.href || "unknown"
                     }
