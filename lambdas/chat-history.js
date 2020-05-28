@@ -1,13 +1,10 @@
 const AWS = require('aws-sdk');
 exports.handler =  function(event, context, callback){
-        console.log(event)
-        console.log(context)
         const queryString = event.queryStringParameters;
-        console.log(queryString)
         const documentClient = new AWS.DynamoDB.DocumentClient();
         const params = {
           "TableName": "ChatBotConversations",
-          "ProjectionExpression": "conversationId, messageDateTime, messageText, userType, referralUrl, messageStatus",
+          "ProjectionExpression": "conversationId, messageDateTime, messageText, userType, referralURL, messageStatus",
 
         }
         if (queryString && queryString.conversationId) {

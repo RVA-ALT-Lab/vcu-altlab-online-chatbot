@@ -4,9 +4,11 @@ export class DataService {
   public static async getConversations () {
     try {
       const result = await fetch( `https://fqtjet7xb6.execute-api.us-east-1.amazonaws.com/default/chat-history`, {
-        method: 'GET'
-      }).then(data => data.json())
-      return JSON.parse(result.body)
+          method: 'GET'
+        })
+        .then(data => data.json())
+      console.log(result)
+      return result
 
     } catch (error) {
       return error.message
@@ -18,7 +20,7 @@ export class DataService {
       const result = await fetch( `https://fqtjet7xb6.execute-api.us-east-1.amazonaws.com/default/chat-history?conversationId=${conversationId}`, {
         method: 'GET'
       }).then(data => data.json())
-      return JSON.parse(result.body)
+      return result
 
     } catch (error) {
       return error.message

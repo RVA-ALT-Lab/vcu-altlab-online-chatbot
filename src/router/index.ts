@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import MainMenu from '../pages/MainMenu.vue'
+import RecentConversations from '../pages/RecentConversations.vue'
+import ConversationDetails from '../pages/ConversationDetails.vue'
 
 
 
@@ -10,8 +11,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'MainMenu',
-      component: MainMenu
+      name: 'RecentConversations',
+      component: RecentConversations
+    },
+    {
+      path: '/conversation/:conversationId',
+      name: 'ConversationDetails',
+      component: ConversationDetails
     }
   ]
 })

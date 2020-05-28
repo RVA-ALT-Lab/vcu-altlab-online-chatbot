@@ -5,7 +5,7 @@
       <div class="col-sm-12 col-md-3">
         <nav class="nav flex-column">
           <router-link class="navbar-brand" to="/">
-            Main Menu
+            Recent Conversations
           </router-link>
         </nav>
       </div>
