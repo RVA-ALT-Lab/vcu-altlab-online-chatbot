@@ -1,59 +1,24 @@
 import { Intent } from "../types/Intent";
 
-export interface GetRequest {
-  resource: string;
-  name?: string;
-}
-export interface PostRequest {
-  resource: string;
-  name?: string;
-  payload: object;
-}
-
-declare global {
-  interface Window {
-    AWS_WORKBENCH: WordPressNonce;
-  }
-}
-
-export interface WordPressNonce {
-  rest_nonce: string;
-}
-
-
 export class DataService {
-  public static async getResource (getRequest:GetRequest) {
+  public static async getConversations () {
     try {
-      const resourcePath = getRequest.hasOwnProperty('name') ? `${getRequest.resource}/${getRequest.name}` : `${getRequest.resource}`
-      const fullPath = `/wp-json/aws-workbench/v1/lex/${resourcePath}`
-      const wordpressNonce:WordPressNonce = window.AWS_WORKBENCH;
-      const result = await fetch( fullPath, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': wordpressNonce.rest_nonce
-        }
+      const result = await fetch( `https://fqtjet7xb6.execute-api.us-east-1.amazonaws.com/default/chat-history`, {
+        method: 'GET'
       }).then(data => data.json())
-      return result
+      return JSON.parse(result.body)
 
     } catch (error) {
       return error.message
     }
   }
 
-  public static async putIntent (intent: Partial<Intent>) {
+  public static async getConversationById (conversationId:string) {
     try {
-      const fullPath = `/wp-json/aws-workbench/v1/lex/intents`
-      const wordpressNonce:WordPressNonce = window.AWS_WORKBENCH;
-      const result = await fetch( fullPath, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': wordpressNonce.rest_nonce
-        },
-        body: JSON.stringify(intent)
+      const result = await fetch( `https://fqtjet7xb6.execute-api.us-east-1.amazonaws.com/default/chat-history?conversationId=${conversationId}`, {
+        method: 'GET'
       }).then(data => data.json())
-      return result
+      return JSON.parse(result.body)
 
     } catch (error) {
       return error.message

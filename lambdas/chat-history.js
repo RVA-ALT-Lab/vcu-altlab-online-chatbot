@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk');
 exports.handler =  function(event, context, callback){
         console.log(event)
+        console.log(context)
         const queryString = event.queryStringParameters;
         console.log(queryString)
         const documentClient = new AWS.DynamoDB.DocumentClient();
@@ -18,7 +19,7 @@ exports.handler =  function(event, context, callback){
 
           documentClient.query(params, function(err, data){
             if (err) {
-                console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+                console.error("Unable to query the table. Error JSON:", JSON.stringify(err, null, 2));
                 callback(err)
             }
             console.log(`Query successful ${data.Count}`);
@@ -26,7 +27,10 @@ exports.handler =  function(event, context, callback){
 
                 callback(null, {
                 statusCode: 200,
-                body: JSON.stringify(data.Items)
+                body: JSON.stringify(data.Items),
+                headers: {
+                  'Access-Control-Allow-Origin': '*'
+                }
             })
             }
             catch(error) {
@@ -51,7 +55,10 @@ exports.handler =  function(event, context, callback){
             try {
                 callback(null, {
                   statusCode: 200,
-                  body: JSON.stringify(data.Items)
+                  body: JSON.stringify(data.Items),
+                  headers: {
+                    'Access-Control-Allow-Origin': '*'
+                  }
                 })
             }
             catch(error) {
