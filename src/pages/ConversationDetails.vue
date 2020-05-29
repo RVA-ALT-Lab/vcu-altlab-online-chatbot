@@ -1,19 +1,23 @@
 <template>
   <div>
     <h3>Conversation Details</h3>
-    {{conversation}}
+    <conversation :conversation="conversation"></conversation>
   </div>
 
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import Conversation from '../components/Conversation.vue'
 import { DataService } from '../utilities/data-service'
 export default Vue.extend({
   data () {
     return {
       conversation: [] as any[]
     }
+  },
+  components: {
+    Conversation
   },
   computed: {
   },
