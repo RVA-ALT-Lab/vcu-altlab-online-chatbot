@@ -27,7 +27,7 @@ module.exports = async function (context, req) {
 
     if(firstAnswer.score < 50) {
       botMessage.messageText = "Gosh. I'm not sure what you are asking for. Can you try saying it a different way?"
-      botMessage.messageStatus = 'missed'
+      botMessage.messageStatus = 'Missed'
     }
 
     const botMessageService = new MongoService()

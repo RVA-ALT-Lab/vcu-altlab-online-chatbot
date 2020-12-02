@@ -3,7 +3,7 @@ import { Intent } from "../types/Intent";
 export class DataService {
   public static async getConversations () {
     try {
-      const result = await fetch( `https://fqtjet7xb6.execute-api.us-east-1.amazonaws.com/default/chat-history`, {
+      const result = await fetch( `https://vcu-online-chatbot-functions.azurewebsites.net/api/getConversations`, {
           method: 'GET'
         })
         .then(data => data.json())
@@ -17,7 +17,7 @@ export class DataService {
 
   public static async getConversationById (conversationId:string) {
     try {
-      const result = await fetch( `https://fqtjet7xb6.execute-api.us-east-1.amazonaws.com/default/chat-history?conversationId=${conversationId}`, {
+      const result = await fetch( `https://vcu-online-chatbot-functions.azurewebsites.net/api/getConversationById?id=${conversationId}`, {
         method: 'GET'
       }).then(data => data.json())
       return result
