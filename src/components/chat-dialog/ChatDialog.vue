@@ -10,7 +10,7 @@
 
         <div id="wp-lex-chatbot-chat-bot" v-bind:class="{open: isVisible}">
         <div class="wp-lex-chatbot-chat-header">
-        <img :src="botSettings.avatarUrl" alt="Online@VCU logo" width="115px">
+        <img :src="botSettings.avatarUrl" alt="VCU Online logo" width="115px">
             <div class="wp-lex-chatbot-chat-header-controls">
                 <div id="wp-lex-chatbot-minimize-button" @click="toggleWpLexChatbot">
                     <svg  version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -29,7 +29,7 @@
                         <span class="from-title from-bot"> {{botSettings.name}} </span>
                         <span>
                                 <div v-if="!userType">
-                                <p>Howdy! I'm the Online@VCU Virtual Assistant.</p>
+                                <p>Hello! I'm the VCU Online Virtual Assistant.</p>
                                   <p>To get started, which of the following best describes your role:</p>
                                   <button class="chat-option-pill" v-on:click="assignUserType('current student')">Current Student</button>
                                   <button class="chat-option-pill" v-on:click="assignUserType('prospective student')">Prospective Student</button>
@@ -39,8 +39,6 @@
                                 <div v-if="userType">
                                   <p>In a few words, describe your problem. If I can't answer, I'll put you in touch with someone who can.</p>
                                   <p>You can also start with one of these popular topics: </p>
-                                  <a href="#" v-on:click="autoSubmitQuestion('blackboard')">Blackboard Courses</a>
-                                  <br>
                                   <a href="#" v-on:click="autoSubmitQuestion('canvas')">Canvas Courses</a>
                                   <br>
                                   <a href="#" v-on:click="autoSubmitQuestion('tuitionAndFees')">Tuition and Fees</a>
@@ -71,13 +69,13 @@ export default Vue.extend({
    data () {
           return {
               botSettings: {
-                name: 'OnlineVCU',
+                name: 'VCU Online',
                 alias: '$LATEST',
                 buttonText: 'Open Chat',
                 autoQuestions: [],
                 welcomeMessage: '',
                 styles: {},
-                avatarUrl: 'https://online.vcu.edu/wp-content/themes/online2015/library/images/svg/online-vcu-horz-hover.svg'
+                avatarUrl: 'https://online.vcu.edu/wp-content/themes/online2015/library/images/svg/VCUOnline-color_SS_fixed.svg'
               },
               botName: '',
               chatText: '',
@@ -89,7 +87,6 @@ export default Vue.extend({
               url: 'https://fqtjet7xb6.execute-api.us-east-1.amazonaws.com/default/lexBotIntegration',
               autoQuestions: {
                   'canvas': 'I am having trouble with canvas',
-                  'blackboard': 'I am having trouble with blackboard',
                   'tuitionAndFees': 'I need information about tuition and fees'
               }
           }
