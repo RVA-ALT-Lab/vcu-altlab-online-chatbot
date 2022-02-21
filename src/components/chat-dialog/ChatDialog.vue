@@ -63,12 +63,10 @@
 <script>
 import Vue from "vue"
 import ChatMessage  from './ChatMessage.vue'
-import VueMarkdown from 'vue-markdown'
 export default Vue.extend({
   name: 'ChatDialog',
   components: {
-    ChatMessage,
-    VueMarkdown
+    ChatMessage
   },
    data () {
           return {
@@ -88,7 +86,7 @@ export default Vue.extend({
               messageDateTime: null,
               userType: null,
               conversationId: null,
-              url: 'https://vcu-online-chatbot-functions.azurewebsites.net/api/queryKnowledgeBase',
+              url: 'https://fqtjet7xb6.execute-api.us-east-1.amazonaws.com/default/lexBotIntegration',
               autoQuestions: {
                   'canvas': 'I am having trouble with canvas',
                   'blackboard': 'I am having trouble with blackboard',
@@ -130,22 +128,23 @@ export default Vue.extend({
           postChatMessage: function (newChat) {
               this.displayResponse(newChat,'you')
                 let body = {
-                  "messageDateTime": this.messageDateTime,
-                  "messageText": newChat,
-                  "conversationId": this.conversationId,
-                  "userType": this.userType,
-                  "referralURL": document.location.href || "unknown"
-                }
-
+                    "body-json": {
+                        "messageDateTime": this.messageDateTime,
+                        "messageText": newChat,
+                        "conversationId": this.conversationId,
+                        "userType": this.userType,
+                        "referralURL": document.location.href || "unknown"
+                    }
+                  }
                fetch(this.url, {
                   method: 'POST',
-                  body: JSON.stringify(body)
+                  body: JSON.stringify(body),
+                  headers: new Headers({
+                    'Content-Type': 'application/json'
+                  })
                 }).then(res => res.json())
                 .catch(error => console.error('Error:', error))
-                .then(response => {
-                  console.log('Success:', response.message )
-                  this.displayResponse(response.message, 'bot')
-                })
+                .then(response => console.log('Success:', this.displayResponse(response, 'bot') ))
 
               this.clearChatInput()
           },
